@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerizuza Payment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            animation: gradientBG 15s ease infinite;
+            background-size: 400% 400%;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .logo {
+            width: 120px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1));
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #4b6cb7, #182848);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .payment-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .payment-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .payment-title img {
+            width: 40px;
+            margin-right: 15px;
+            border-radius: 8px;
+        }
+
+        .qr-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .qr-code {
+            max-width: 250px;
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            padding: 10px;
+            background: white;
+        }
+
+        .qr-code:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .number-container {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .number-container:hover {
+            background: #f1f3f5;
+        }
+
+        .number {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #333;
+            word-break: break-all;
+        }
+
+        .copy-btn {
+            background: linear-gradient(90deg, #4b6cb7, #182848);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            margin-left: 10px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .copy-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+
+        .notification {
+            background: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .notification i {
+            color: #ffc107;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .notification p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 0.9rem;
+            padding-top: 20px;
+            border-top: 1px dashed #ddd;
+        }
+
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .music-control:hover {
+            transform: scale(1.1);
+            background: #f8f9fa;
+        }
+
+        .music-control i {
+            font-size: 1.2rem;
+            color: #4b6cb7;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .payment-card {
+                padding: 20px;
+            }
+            
+            .logo {
+                width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Audio untuk backsound -->
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <!-- Tombol kontrol musik -->
+    <div class="music-control" id="musicControl">
+        <i class="fas fa-music"></i>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <img src="https://files.catbox.moe/zjua7c.png" alt="Logo Gerizuza" class="logo">
+            <h1>Gerizuza Payment</h1>
+            <p>Silakan pilih metode pembayaran yang tersedia</p>
+        </div>
+        
+        <div class="payment-methods">
+            <!-- QRIS -->
+            <div class="payment-card">
+                <div class="payment-title">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QRIS_logo.svg/1200px-QRIS_logo.svg.png" alt="QRIS">
+                    <span>QRIS</span>
+                </div>
+                
+                <div class="qr-container">
+                    <img src="https://files.catbox.moe/f0z7i9.jpg" alt="QR Code" class="qr-code">
+                </div>
+                
+                <div class="notification">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <p><strong>Perhatian:</strong> Untuk transaksi selain DANA akan dikenakan biaya admin Rp1.000</p>
+                </div>
+            </div>
+            
+            <!-- DANA -->
+            <div class="payment-card">
+                <div class="payment-title">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg" alt="DANA">
+                    <span>DANA</span>
+                </div>
+                
+                <div class="qr-container">
+                    <p>Nomor Telepon DANA</p>
+                    <div class="number-container">
+                        <span class="number">088994321220</span>
+                        <button class="copy-btn" onclick="copyToClipboard('088994321220')">
+                            <i class="far fa-copy"></i> Salin
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GOPAY -->
+            <div class="payment-card">
+                <div class="payment-title">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Gopay_logo.svg/2560px-Gopay_logo.svg.png" alt="GOPAY">
+                    <span>GOPAY</span>
+                </div>
+                
+                <div class="qr-container">
+                    <p>Nomor Telepon GOPAY</p>
+                    <div class="number-container">
+                        <span class="number">088994321220</span>
+                        <button class="copy-btn" onclick="copyToClipboard('088994321220')">
+                            <i class="far fa-copy"></i> Salin
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Pastikan nominal dan detail pembayaran sudah benar sebelum melakukan transaksi</p>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi untuk copy nomor
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                alert('Nomor berhasil disalin: ' + text);
+            }, function(err) {
+                console.error('Gagal menyalin teks: ', err);
+                alert('Gagal menyalin nomor');
+            });
+        }
+
+        // Kontrol musik
+        const bgMusic = document.getElementById('bgMusic');
+        const musicControl = document.getElementById('musicControl');
+        let isPlaying = false;
+
+        // Auto play musik setelah interaksi pengguna
+        document.body.addEventListener('click', function() {
+            if (!isPlaying) {
+                bgMusic.play()
+                    .then(() => {
+                        isPlaying = true;
+                        musicControl.innerHTML = '<i class="fas fa-pause"></i>';
+                    })
+                    .catch(error => {
+                        console.log('Autoplay prevented:', error);
+                    });
+            }
+        }, { once: true });
+
+        // Tombol kontrol musik
+        musicControl.addEventListener('click', function() {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicControl.innerHTML = '<i class="fas fa-music"></i>';
+            } else {
+                bgMusic.play();
+                musicControl.innerHTML = '<i class="fas fa-pause"></i>';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Volume rendah secara default
+        bgMusic.volume = 0.3;
+    </script>
+</body>
+</html>
